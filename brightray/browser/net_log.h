@@ -5,6 +5,7 @@
 #ifndef BRIGHTRAY_BROWSER_NET_LOG_H_
 #define BRIGHTRAY_BROWSER_NET_LOG_H_
 
+#include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "net/log/net_log.h"
@@ -23,7 +24,8 @@ class NetLog : public net::NetLog {
   void StartLogging();
   void StartLogging(const base::FilePath& path);
   bool IsLogging();
-  void StopLogging(base::OnceClosure callback = base::OnceClosure());
+  // TODO(sethlu): Use base::DoNothing() when libchromiumcontent updates
+  void StopLogging(base::OnceClosure callback = base::BindOnce([]() {}));
 
  private:
   // This observer handles writing NetLogs.
